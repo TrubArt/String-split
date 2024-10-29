@@ -1,0 +1,1 @@
+add_library(SplitStringLib StringSplit.h StringSplit.cpp)

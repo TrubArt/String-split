@@ -1,28 +1,33 @@
+#include <iostream>
 #include <string>
-#include <vector>
+#include "src/StringSplit.h"
 
-std::vector<std::string> getSequence(const std::string& str, const std::string& delimiter)
+std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& vec)
 {
-	std::vector<std::string> answ;
-	size_t posNew = std::string::npos;
-	int posLast = -1 * delimiter.size();
-	std::string token;
-
-	while ((posNew = str.find(delimiter, posLast + delimiter.size())) != std::string::npos) {
-		token = str.substr(posLast + delimiter.size(), posNew - posLast - delimiter.size());
-		if (!token.empty())
-		{
-			answ.push_back(token);
-		}
-		posLast = posNew;
-		token.erase();
-	}
-
-	token = str.substr(posLast + delimiter.size());
-	if (!token.empty())
+	for (size_t index = 0; index < vec.size(); ++index)
 	{
-		answ.push_back(token);
+		std::cout << index + 1 << ": " << vec[index] << "\n";
 	}
+	return out;
+}
 
-	return answ;
+void testSplit(const std::string& str, const std::string& delimiter = " ")
+{
+	std::vector<std::string> answer = split(str, delimiter);
+	std::cout << answer << "\n\n";
+}
+
+int main()
+{
+	std::string standartStringExample = "Jennifer plays under the tree";
+	testSplit(standartStringExample);
+
+	std::string nSpaceExample = "  Jennifer    plays         under the   tree   ";
+	testSplit(nSpaceExample);
+
+	std::string delimiterExample = "Jennifer;plays;under;the;tree";
+	testSplit(delimiterExample, ";");
+
+	std::string severalDelimiterExample = "Jennifer;;plays;under;;;the;tree";
+	testSplit(severalDelimiterExample, ";");
 }
